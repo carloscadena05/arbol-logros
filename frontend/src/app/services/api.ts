@@ -22,8 +22,9 @@ export interface ApiResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class Api {
-  private apiUrl = '/backend/api';
+export class Api {//
+  //https://ja-grad-logros.gt.tc/api/guardar_persona.php
+  private apiUrl = 'https://ja-grad-logros.gt.tc/api';
 
   constructor(private http: HttpClient) { }
 
