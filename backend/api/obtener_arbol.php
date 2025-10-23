@@ -1,18 +1,23 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 include_once '../config/database.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$query = "SELECT p.id as persona_id, p.nombre, p.email, 
-                 l.id as logro_id, l.titulo, l.descripcion, l.categoria, 
-                 l.fecha_logro, l.nivel, l.padre_id
+$query = "SELECT p.id as persona_id, p.nombre,
+                 l.id as logro_id, l.titulo, l.descripcion
           FROM personas p
           LEFT JOIN logros l ON p.id = l.persona_id
-          ORDER BY p.id, l.nivel, l.fecha_logro";
+          ORDER BY p.id, l.id";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -26,7 +31,6 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $personas[$persona_id] = array(
             'id' => $persona_id,
             'nombre' => $row['nombre'],
-            'email' => $row['email'],
             'logros' => array()
         );
     }
@@ -35,15 +39,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $personas[$persona_id]['logros'][] = array(
             'id' => $row['logro_id'],
             'titulo' => $row['titulo'],
-            'descripcion' => $row['descripcion'],
-            'categoria' => $row['categoria'],
-            'fecha_logro' => $row['fecha_logro'],
-            'nivel' => $row['nivel'],
-            'padre_id' => $row['padre_id']
+            'descripcion' => $row['descripcion']
         );
     }
 }
 
 http_response_code(200);
-echo json_encode(array_values($personas));
+echo json_encode(array(
+    "success" => true,
+    "data" => array_values($personas)
+));
 ?>
