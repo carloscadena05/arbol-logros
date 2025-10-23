@@ -1,1 +1,25 @@
-<p>arbol-logros works!</p>
+<div class="tree-container">
+    <div class="tree-controls">
+        <button class="btn btn-secondary" (click)="cargarDatos()">
+            Actualizar Árbol
+        </button>
+        @if(datos.length > 0) {
+            <span class="info-text" >
+                Mostrando {{ datos.length }} persona(s) registrada(s)
+            </span>
+        }
+    </div>
+
+    <div id="tree-container"></div>
+
+    <div class="tree-legend">
+        <div class="legend-item">
+            <span class="legend-color persona"></span>
+            <span>Persona</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-color logro"></span>
+            <span>Logro</span>
+        </div>
+    </div>
+</div>

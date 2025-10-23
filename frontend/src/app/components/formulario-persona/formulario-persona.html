@@ -1,1 +1,81 @@
-<p>formulario-persona works!</p>
+<div class="form-container">
+  <h3>Registrar Persona y Logros</h3>
+  
+  <form [formGroup]="personaForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Datos Personales -->
+    <div class="form-group">
+      <label for="nombre">Nombre Completo *</label>
+      <input 
+        type="text" 
+        id="nombre" 
+        formControlName="nombre" 
+        class="form-control"
+        placeholder="Ingresa tu nombre completo">
+      @if (enviado && personaForm.get('nombre')?.errors) {
+        <div class="error">
+          @if (personaForm.get('nombre')?.errors?.['required']) {
+            <div>El nombre es requerido</div>
+          }
+          @if (personaForm.get('nombre')?.errors?.['minlength']) {
+            <div>Mínimo 2 caracteres</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Logros -->
+    <div formArrayName="logros">
+      <div class="logros-header">
+        <h4>Logros</h4>
+        <button type="button" class="btn btn-secondary" (click)="agregarLogro()">
+          + Agregar Logro
+        </button>
+      </div>
+
+      @for (logro of logros.controls; track i; let i = $index) {
+        <div class="logro-item" [formGroupName]="i">
+          
+          <div class="logro-header">
+            <h5>Logro {{ i + 1 }}</h5>
+            @if (logros.length > 1) {
+              <button type="button" class="btn btn-danger" 
+                      (click)="eliminarLogro(i)">
+                Eliminar
+              </button>
+            }
+          </div>
+
+          <div class="form-group">
+            <label [for]="'titulo' + i">Título del Logro *</label>
+            <input 
+              type="text" 
+              [id]="'titulo' + i" 
+              formControlName="titulo" 
+              class="form-control"
+              placeholder="Ej: Graduación Universitaria">
+            @if (enviado && logro.get('titulo')?.errors) {
+              <div class="error">
+                El título es requerido (mínimo 3 caracteres)
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label [for]="'descripcion' + i">Descripción</label>
+            <textarea 
+              [id]="'descripcion' + i" 
+              formControlName="descripcion" 
+              class="form-control"
+              rows="3"
+              placeholder="Describe tu logro..."></textarea>
+          </div>
+        </div>
+      }
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="guardando">
+      {{ guardando ? 'Guardando...' : 'Guardar Persona y Logros' }}
+    </button>
+  </form>
+</div><!--  -->

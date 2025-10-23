@@ -23,7 +23,7 @@
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 15px;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid #13538a;
 }
 
 .logro-header {
@@ -65,7 +65,7 @@
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background-color: #13538a;
   color: white;
   width: 100%;
   padding: 12px;
@@ -95,4 +95,19 @@
 
 .btn-danger:hover {
   background-color: #c82333;
+}
+
+.form-control {
+  background: white;
+  padding: 0.5rem 0.25rem;
+  border-radius: 0.5rem;
+  border: 2px solid #13538a33;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition-duration: 300ms;
+  width: calc(100% - 0.5rem);
+  &:focus {
+  border: 2px solid #13538a;
+  outline: none;
+  }
 }
