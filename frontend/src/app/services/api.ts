@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Logro {
@@ -23,33 +23,27 @@ export interface ApiResponse {
   providedIn: 'root'
 })
 export class Api {
-  // Usar proxy CORS - ELIGE UNA OPCIÓN:
-
-  // Opción A: Proxy CORS público
+  // Usar cors-anywhere pero con los headers requeridos
   private proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  private apiUrl = 'https://ja-grad-logros.gt.tc/api';
+  private apiBaseUrl = 'https://ja-grad-logros.gt.tc/api';
   
-  // Opción B: Otro proxy alternativo
-  // private proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=';
-  
-  // Opción C: Sin proxy (para probar si CORS ya funciona)
-  // private apiUrl = 'https://ja-grad-logros.gt.tc/api';
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpHttpRequest', // Header requerido
+      'Origin': 'https://arbol-logros.vercel.app' // Header requerido
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
   guardarPersona(persona: Persona): Observable<ApiResponse> {
-    // Con proxy
-    return this.http.post<ApiResponse>(`${this.proxyUrl}${this.apiUrl}/guardar_persona.php`, persona);
-    
-    // Sin proxy (cuando CORS funcione)
-    // return this.http.post<ApiResponse>(`${this.apiUrl}/guardar_persona.php`, persona);
+    const url = `${this.apiBaseUrl}/guardar_persona.php`;
+    return this.http.post<ApiResponse>(url, persona, this.httpOptions);
   }
 
   obtenerArbol(): Observable<ApiResponse> {
-    // Con proxy
-    return this.http.get<ApiResponse>(`${this.proxyUrl}${this.apiUrl}/obtener_arbol.php`);
-    
-    // Sin proxy (cuando CORS funcione)
-    // return this.http.get<ApiResponse>(`${this.apiUrl}/obtener_arbol.php`);
+    const url = `${this.apiBaseUrl}/obtener_arbol.php`;
+    return this.http.get<ApiResponse>(url, this.httpOptions);
   }
 }
