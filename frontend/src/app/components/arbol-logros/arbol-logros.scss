@@ -1,0 +1,90 @@
+.tree-container {
+  position: relative;
+}
+
+.tree-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.info-text {
+  color: #666;
+  font-size: 14px;
+}
+
+#tree-container {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  background: white;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.tree-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-color.persona {
+  background-color: #4e79a7;
+}
+
+.legend-color.logro {
+  background-color: #f28e2c;
+}
+
+.node circle {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.node text {
+  font-family: 'Arial', sans-serif;
+  font-size: 12px;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tree-controls {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  #tree-container {
+    min-height: 300px;
+  }
+}

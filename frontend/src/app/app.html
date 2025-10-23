@@ -1,0 +1,19 @@
+<div class="container">
+  <header class="header">
+    <h1>{{ title() }}</h1>
+    <p>Comparte tus logros y visualízalos en un árbol de crecimiento personal</p>
+  </header>
+
+  <main class="main-content">
+    <section class="form-section">
+      <app-formulario-persona 
+        (personaGuardada)="onPersonaGuardada()">
+      </app-formulario-persona>
+    </section>
+
+    <section class="tree-section">
+      <h2>Árbol de Logros</h2>
+      <app-arbol-logros></app-arbol-logros>
+    </section>
+  </main>
+</div>
