@@ -23,7 +23,7 @@ export interface ApiResponse {
   providedIn: 'root'
 })
 export class Api {
-  private apiUrl = 'http://localhost/backend/api';
+  private apiUrl = '/backend/api';
 
   constructor(private http: HttpClient) { }
 
