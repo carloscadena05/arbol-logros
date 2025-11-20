@@ -35,7 +35,8 @@ export class Api {
   PROTOCOL = typeof window !== 'undefined' ? window.location.protocol : 'http:'; // Asigna un valor por defecto para Node.js
   DOMINIO = typeof window !== 'undefined' ? window.location.hostname : 'localhost'; // Asigna un valor por defecto para Node.js
   ACCESS = 'public'
-  WSERVICE = 'ws-arbol/api';
+  WSERVICE = '/api';
+  // WSERVICE = 'ws-arbol/api';
 
   constructor(private provider: ProviderService) { }
 
