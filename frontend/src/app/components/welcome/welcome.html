@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>¡Celebra tus Logros, Honra tu Esfuerzo!</h2>
+<mat-dialog-content>
+
+    <!-- Sabemos que en tu vida has tenido muchos logros, y nos encantaría saber acerca de ellos. Llena el formulario y cuéntanos más
+
+    Con cada logro, sabemos que también hay etapas difíciles que tuviste que atravesar para llegar a donde estás ahora, también nos gustaría saber de eso -->
+
+    <section class="flex flex-col gap-y-4">
+        <p>
+            Todos tenemos logros que nos enorgullecen, y queremos que nos hables de los tuyos. Llena el formulario y comparte
+            esas metas que has alcanzado.
+        </p>
+
+        <article class="flex flex-col gap-y-4 bg-[#16384d] -mx-6 px-6 py-4">
+            <p>
+                Sin embargo, somos conscientes de que nada que realmente valga la pena viene sin esfuerzo. Los tropiezos, las dudas
+                y las dificultades son maestros disfrazados.
+            </p>
+            <p>Por eso, además de tu logro, te preguntamos:</p>
+            <p class="!text-[#f3d527] font-semibold">"¿Cuál fue el mayor reto que superaste para llegar hasta aquí?"</p>
+            
+            <p>
+                Queremos escuchar toda la historia, no solo el final feliz. Porque tu proceso puede ser la chispa que otro necesita
+                para seguir adelante.
+            </p>
+        </article>
+
+        <p>
+            Aplaudimos tu cima, pero admiramos la montaña que tuviste que escalar para llegar allí.
+        </p>
+    </section>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close [routerLink]="'/tree'" (click)="dialog_done()" class="tree-btn tree-btn-secondary">Ver árbol</button>
+    <button mat-dialog-close [routerLink]="'/form'" (click)="dialog_done()" class="tree-btn tree-btn-primary ml-4">
+        Agregar un logro mío
+    </button>
+</mat-dialog-actions>

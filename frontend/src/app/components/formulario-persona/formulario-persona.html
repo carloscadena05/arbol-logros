@@ -1,81 +1,88 @@
-<div class="form-container">
-  <h3>Registrar Persona y Logros</h3>
-  
-  <form [formGroup]="personaForm" (ngSubmit)="onSubmit()">
-    
-    <!-- Datos Personales -->
-    <div class="form-group">
-      <label for="nombre">Nombre Completo *</label>
-      <input 
-        type="text" 
-        id="nombre" 
-        formControlName="nombre" 
-        class="form-control"
-        placeholder="Ingresa tu nombre completo">
-      @if (enviado && personaForm.get('nombre')?.errors) {
-        <div class="error">
+<div style="position: relative;">
+  <header class="header">
+    <h1 style="background-color: #f3d527; color: #13538a; padding: 1rem .5rem;" class="text-2xl font-bold">Logros JA</h1>
+    <p style="background-color: #13538a; color: #f1f5f9; padding: 1rem .5rem;">Comparte tus logros y visualízalos en
+      nuestro árbol de crecimiento</p>
+  </header>
+
+  <div class="form-container">
+    <form [formGroup]="personaForm" (ngSubmit)="onSubmit()">
+
+      <!-- Datos Personales -->
+      <mat-form-field appearance="outline" style="width: 100%;" class="-mb-6">
+        <mat-label>Nombre</mat-label>
+        <input type="text" matInput="" formControlName="nombre">
+        <mat-error>
           @if (personaForm.get('nombre')?.errors?.['required']) {
-            <div>El nombre es requerido</div>
+          El nombre es requerido
           }
           @if (personaForm.get('nombre')?.errors?.['minlength']) {
-            <div>Mínimo 2 caracteres</div>
+          Mínimo 2 caracteres
           }
-        </div>
-      }
-    </div>
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Logros -->
-    <div formArrayName="logros">
-      <div class="logros-header">
-        <h4>Logros</h4>
-        <button type="button" class="btn btn-secondary" (click)="agregarLogro()">
-          + Agregar Logro
-        </button>
+      <!-- Logros -->
+      <div formArrayName="logros">
+        <div class="logros-header">
+          <h4>Logros</h4>
+          <button type="button" class="btn btn-secondary" (click)="agregarLogro()">
+            + Agregar Logro
+          </button>
+        </div>
+
+        @for (logro of logros.controls; track i; let i = $index) {
+        <div class="logro-item" [formGroupName]="i">
+
+          <div class="logro-header">
+            <h5 class="btn btn-tertiary">Logro {{ i + 1 }}</h5>
+            @if (logros.length > 1) {
+            <button type="button" class="btn btn-danger" (click)="eliminarLogro(i)">
+              Eliminar
+            </button>
+            }
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Logro</mat-label>
+            <input type="text" matInput="" formControlName="titulo">
+            <mat-error>
+              El título es requerido (mínimo 3 caracteres)
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input type="text" matInput="" formControlName="descripcion" placeholder="¿En qué consiste tu logro?">
+            <mat-error>La descripción es requerida (mínimo 3 caracteres)</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Desafío</mat-label>
+            <input type="text" matInput="" formControlName="desafio"
+              placeholder="¿Qué desafíos o sacrificios atravesaste para tener tu logro?">
+            <mat-error>El desafío es requerido (mínimo 3 caracteres)</mat-error>
+          </mat-form-field>
+
+        </div>
+        }
       </div>
 
-      @for (logro of logros.controls; track i; let i = $index) {
-        <div class="logro-item" [formGroupName]="i">
-          
-          <div class="logro-header">
-            <h5>Logro {{ i + 1 }}</h5>
-            @if (logros.length > 1) {
-              <button type="button" class="btn btn-danger" 
-                      (click)="eliminarLogro(i)">
-                Eliminar
-              </button>
-            }
-          </div>
-
-          <div class="form-group">
-            <label [for]="'titulo' + i">Título del Logro *</label>
-            <input 
-              type="text" 
-              [id]="'titulo' + i" 
-              formControlName="titulo" 
-              class="form-control"
-              placeholder="Ej: Graduación Universitaria">
-            @if (enviado && logro.get('titulo')?.errors) {
-              <div class="error">
-                El título es requerido (mínimo 3 caracteres)
-              </div>
-            }
-          </div>
-
-          <div class="form-group">
-            <label [for]="'descripcion' + i">Descripción</label>
-            <textarea 
-              [id]="'descripcion' + i" 
-              formControlName="descripcion" 
-              class="form-control"
-              rows="3"
-              placeholder="Describe tu logro..."></textarea>
-          </div>
-        </div>
-      }
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="guardando">
-      {{ guardando ? 'Guardando...' : 'Guardar Persona y Logros' }}
-    </button>
-  </form>
-</div><!--  -->
+      <button type="submit" class="btn btn-primary mb-14" [disabled]="guardando">
+        {{ guardando ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </form>
+  </div><!--  -->
+</div>
+<button class="floating-btn" mat-dialog-close [routerLink]="'/tree'">
+  <span class="btn-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#f1f5f9" fill="none">
+    <path d="M12 22V9" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M9.00195 18.002C7.3451 18.002 6.00195 16.6234 6.00195 14.9665C4.30581 14.7239 3.00195 13.2652 3.00195 11.502C3.00195 10.0052 3.94147 8.7279 5.26293 8.22759C5.09522 7.85339 5.00195 7.43856 5.00195 7.00195C5.00195 5.3451 6.3451 4.00195 8.00195 4.00195C8.3922 4.00195 8.76505 4.07647 9.10703 4.21204C9.45374 2.93842 10.6185 2.00195 12.002 2.00195C13.3854 2.00195 14.5502 2.93842 14.8969 4.21204C15.2389 4.07647 15.6117 4.00195 16.002 4.00195C17.6588 4.00195 19.002 5.3451 19.002 7.00195C19.002 7.43856 18.9087 7.85339 18.741 8.22759C20.0624 8.7279 21.002 10.0052 21.002 11.502C21.002 13.2653 19.698 14.724 18.0017 14.9665C18.0017 16.6234 16.6588 18.002 15.002 18.002" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M12 15L14.5 12.5" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M12 13L9.5 10.5" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M10 22H14" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+  </span>
+  <span class="btn-text">Ver árbol</span>
+</button>

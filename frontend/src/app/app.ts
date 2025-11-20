@@ -1,21 +1,24 @@
 import { Component, signal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RouterOutlet } from '@angular/router';
-import { ArbolLogros } from './components/arbol-logros/arbol-logros';
-import { FormularioPersona } from './components/formulario-persona/formulario-persona';
+import { Welcome } from './components/welcome/welcome';
 
 @Component({
   selector: 'app-root',
-  imports: [ArbolLogros, FormularioPersona],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('logros');
+  protected readonly title = signal('Logros JA');
 
-  onPersonaGuardada(): void {
-    // Recargar el árbol cuando se guarda una nueva persona
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+  constructor(private dialog: MatDialog) { }
+  ngOnInit() {
+    // Si no existe, devuelve 'false' (como string) y luego lo parseamos
+    const dialogDone = JSON.parse(localStorage.getItem('dialog_done') ?? 'false');
+
+    if (dialogDone === false) {
+      this.dialog.open(Welcome);
+    }
   }
 }

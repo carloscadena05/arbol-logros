@@ -1,25 +1,78 @@
-<div class="tree-container">
-    <div class="tree-controls">
-        <button class="btn btn-secondary" (click)="cargarDatos()">
-            Actualizar Árbol
+
+<div class="arbol-container">
+    <!-- Controles móviles -->
+    <div class="mobile-controls lg:hidden">
+        <button class="zoom-btn" (click)="zoomOut()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#13538a"
+                fill="none">
+                <path d="M20 12L4 12" stroke="#13538a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                </path>
+            </svg>
         </button>
-        @if(datos.length > 0) {
-            <span class="info-text" >
-                Mostrando {{ datos.length }} persona(s) registrada(s)
-            </span>
-        }
+        <span class="zoom-level flex gap-x-1 items-center">
+            {{ (zoom * 100).toFixed(0) }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#f3d527"
+                fill="none">
+                <path d="M4 20L20 4" stroke="#f3d527" stroke-width="3" stroke-linecap="round"></path>
+                <path
+                    d="M8.26777 4.73223C9.24408 5.70854 9.24408 7.29146 8.26777 8.26777C7.29146 9.24408 5.70854 9.24408 4.73223 8.26777C3.75592 7.29146 3.75592 5.70854 4.73223 4.73223C5.70854 3.75592 7.29146 3.75592 8.26777 4.73223Z"
+                    stroke="#f3d527" stroke-width="3"></path>
+                <path
+                    d="M19.2678 15.7322C20.2441 16.7085 20.2441 18.2915 19.2678 19.2678C18.2915 20.2441 16.7085 20.2441 15.7322 19.2678C14.7559 18.2915 14.7559 16.7085 15.7322 15.7322C16.7085 14.7559 18.2915 14.7559 19.2678 15.7322Z"
+                    stroke="#f3d527" stroke-width="3"></path>
+            </svg></span>
+        <button class="zoom-btn" (click)="zoomIn()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#13538a"
+                fill="none">
+                <path d="M12 4V20M20 12H4" stroke="#13538a" stroke-width="3" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        <button class="recenter-btn" (click)="recenterView()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#f3d527"
+                class="scale-x-[-1]" fill="none">
+                <path
+                    d="M21.5 12C21.5 17.2467 17.2467 21.5 12 21.5C6.75334 21.5 2.5 17.2467 2.5 12C2.5 6.75329 6.75334 2.5 12 2.5C15.8956 2.5 19.2436 4.84478 20.7095 8.2M21.5 5.5L21.025 8.675L18 8"
+                    stroke="#f3d527" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
     </div>
 
-    <div id="tree-container"></div>
-
-    <div class="tree-legend">
-        <div class="legend-item">
-            <span class="legend-color persona"></span>
-            <span>Persona</span>
-        </div>
-        <div class="legend-item">
-            <span class="legend-color logro"></span>
-            <span>Logro</span>
-        </div>
+    <!-- Contenedor con scroll -->
+    <div class="viewport-container">
+        <div #container class="fixed-viewport"></div>
     </div>
+
+    <!-- Botón agregar logro -->
+    <button class="floating-btn" mat-dialog-close [routerLink]="'/form'">
+        <span class="btn-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#13538a"
+                fill="none">
+                <path d="M12 4V20M20 12H4" stroke="#13538a" stroke-width="3" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+        </span>
+        <span class="btn-text">Agregar Logro</span>
+    </button>
+
+    <!-- Estados -->
+    @if (cargando) {
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Cargando logros...</p>
+    </div>
+    }
+    @if(error) {
+    <div class="error-overlay">
+        <p>{{ error }}</p>
+        <button (click)="recargarDatos()" class="btn-retry">Reintentar</button>
+    </div>
+    }
+
+    @if(is_master_pc) {
+        <h1 class="fixed top-10 left-5 p-4 overflow-hidden bg-[#f3d527] text-[#13538a] -skew-12 text-4xl font-bold">¡Sé parte del árbol de logros!</h1>
+        <qrcode [qrdata]="url" [width]="256" [errorCorrectionLevel]="'M'" [allowEmptyString]="true" colorDark="#45bbef" colorLight="#13538a" class="fixed bottom-5 left-5 rounded-4xl overflow-hidden"></qrcode>
+    }
+
+
 </div>

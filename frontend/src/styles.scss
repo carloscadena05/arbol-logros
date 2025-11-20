@@ -1,3 +1,49 @@
+@use '@angular/material' as mat;
+@import "tailwindcss";
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.form-field-overrides((outlined-input-text-placeholder-color: #cbd5e1,
+      outlined-label-text-color: #cbd5e1,
+      outlined-outline-color: #cbd5e1,
+      outlined-hover-label-text-color: #d6ba00,
+      outlined-hover-outline-color: #d6ba00,
+      outlined-focus-label-text-color: #f3d527,
+      outlined-focus-outline-color: #f3d527,
+      outlined-error-label-text-color: #f87171,
+      outlined-error-outline-color: #f87171,
+      outlined-error-hover-outline-color: #ef4444,
+      outlined-error-hover-label-text-color: #ef4444,
+      outlined-input-text-color: #f1f5f9,
+      outlined-caret-color: #f1f5f9));
+}
+
+html {
+  @include mat.theme((color: (primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Lexend,
+      density: 0,
+    ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+}
+
 .tree-container {
   position: relative;
 }
@@ -20,7 +66,7 @@
 #tree-container {
   border: 1px solid #e9ecef;
   border-radius: 8px;
-  background: white;
+  background: #f1f5f9;
   min-height: 400px;
   display: flex;
   justify-content: center;
@@ -66,7 +112,6 @@
 }
 
 .node text {
-  font-family: 'Arial', sans-serif;
   font-size: 12px;
 }
 
@@ -76,24 +121,27 @@
   stroke-width: 2px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .tree-controls {
     flex-direction: column;
     gap: 10px;
     text-align: center;
   }
-  
+
   #tree-container {
     min-height: 300px;
   }
 }
 
+.form-container {
+  padding: 1rem;
+}
 
 .form-container h3 {
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+  background: #13538a;
 }
 
 .logros-header {
@@ -106,7 +154,7 @@
 }
 
 .logros-header h4 {
-  color: #333;
+  color: #f3d527;
   margin: 0;
 }
 
@@ -145,7 +193,7 @@
 .btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 16px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.3s ease;
@@ -157,8 +205,8 @@
 }
 
 .btn-primary {
-  background-color: #13538a;
-  color: white;
+  background-color: #f3d527;
+  color: #13538a;
   width: 100%;
   padding: 12px;
   font-size: 16px;
@@ -166,21 +214,32 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #d6ba00;
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: #1c94a4;
+  color: #f1f5f9;
 }
 
 .btn-secondary:hover {
-  background-color: #545b62;
+  background-color: #20a9bc;
+}
+
+.btn-tertiary {
+  background-color: #187ca8;
+  color: #f1f5f9 !important;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.btn-tertiary:hover {
+  background-color: #20a9bc;
 }
 
 .btn-danger {
   background-color: #dc3545;
-  color: white;
+  color: #f1f5f9;
   padding: 5px 10px;
   font-size: 12px;
 }
@@ -189,9 +248,78 @@
   background-color: #c82333;
 }
 
+.error {
+  color: #c82333;
+}
+
+body {
+  display: block;
+  margin: 0;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.mat-mdc-dialog-surface {
+  background: #13538a !important;
+
+  h2 {
+    color: #f3d527 !important;
+    font-weight: 600;
+  }
+
+  h3 {
+    color: #45bbef;
+  }
+
+  p {
+    color: #f1f5f9;
+  }
+}
+
+
 * {
-  font-family: "Lexend", sans-serif;
-  //font-optical-sizing: auto;
-  //font-weight: <weight>;
-  font-style: normal;
+  font-family: "Lexend", sans-serif !important;
+}
+
+textarea {
+  resize: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+  border-right: 0 !important;
+}
+
+
+.mdc-notched-outline {
+  border-radius: 1.5rem;
+}
+
+.mdc-notched-outline__leading {
+  border-top-left-radius: 1rem !important;
+  border-bottom-left-radius: 1rem !important;
+}
+
+.mdc-notched-outline__trailing {
+  border-top-right-radius: 1rem !important;
+  border-bottom-right-radius: 1rem !important;
+}
+
+.mat-mdc-form-field-error {
+  color: #f87171 !important;
 }

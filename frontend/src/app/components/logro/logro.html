@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{logro.nombre}} | {{logro.titulo}}</h2>
+<mat-dialog-content>
+    @if(logro.descripcion) {
+        <h3 style="font-weight: 600;">¿En que consistió mi logro?</h3>
+        <p>{{logro.descripcion}}</p>
+    }
+
+    @if(logro.desafio) {
+        <h3 style="font-weight: 600;">¿Qué desafíos tuve?</h3>
+        <p>{{logro.desafio}}</p>
+    }
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="tree-btn tree-btn-secondary" mat-dialog-close>Cerrar</button>
+    <button class="tree-btn tree-btn-primary ml-4" mat-dialog-close [routerLink]="'/form'">
+        <span class="btn-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#13538a"
+                fill="none">
+                <path d="M12 4V20M20 12H4" stroke="#13538a" stroke-width="3" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+        </span>
+        <span class="btn-text">Agregar Logro</span>
+    </button>
+</mat-dialog-actions>
